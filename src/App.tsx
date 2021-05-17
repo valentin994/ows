@@ -1,24 +1,32 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import { makeStyles } from "@material-ui/core/index";
+import Authentication from "./Authentication/Authentication";
+import Posts from "./Posts/Posts";
+
+const useStyles = makeStyles({
+  root: {
+    backgroundColor: "#212529",
+    color: "#f5f3f4",
+    display: "flex",
+    height: "100vh",
+    flexDirection: "column",
+    justifyContent: "center",
+  },
+});
 
 function App() {
+  const classes = useStyles();
+  const [loggedIn, setLoggedIn] = useState(false);
+  useEffect(() => {
+    console.log(loggedIn);
+  });
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className={classes.root}>
+      {loggedIn ? (
+        <Posts setLoggedIn={setLoggedIn} />
+      ) : (
+        <Authentication setLoggedIn={setLoggedIn} />
+      )}
     </div>
   );
 }
