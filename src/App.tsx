@@ -17,10 +17,7 @@ const useStyles = makeStyles({
 function App() {
   const classes = useStyles();
   const [loggedIn, setLoggedIn] = useState(false);
-  useEffect(() => {
-    console.log(loggedIn);
-  });
-  return (
+   return (
     <div className={classes.root}>
       {loggedIn ? (
         <Posts setLoggedIn={setLoggedIn} />

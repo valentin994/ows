@@ -8,6 +8,7 @@ import {
   Modal,
   TextField,
   FormControl,
+  Button
 } from "@material-ui/core";
 import PostAddIcon from "@material-ui/icons/PostAdd";
 import RestoreIcon from "@material-ui/icons/Restore";
@@ -38,6 +39,10 @@ const useStyles = makeStyles((theme) => ({
       color: "red",
       transition: "200ms ease-in",
     },
+    "& .MuiGrid-root":{
+      overflow: "scroll",
+      maxHeight: "90vh"
+    },
   },
   iconColor: {
     color: "#f8edeb",
@@ -60,6 +65,12 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2, 4, 3),
     top: 150,
     left: "calc(50% - 200px)",
+    "& .MuiInput-input":{
+      width: "380px",
+    },
+    "& .MuiButton-root":{
+      margin: theme.spacing(1,0,0,0)
+    }
   },
 }));
 
@@ -84,6 +95,7 @@ function Posts(props: any) {
   const [open, setOpen] = useState(false);
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
+  const [errorMessage, setErrorMessage] = useState(false);
 
   const handleOpen = () => {
     setOpen(true);
@@ -93,11 +105,25 @@ function Posts(props: any) {
     setOpen(false);
   };
 
+  const handleAddTodo = () => {
+    setErrorMessage(false);
+    if(!title || !desc){
+      setErrorMessage(true)
+    }
+    else{
+      setTodos([...todos, {"title": title, "desc": desc}])
+      setTitle("");
+      setDesc("");
+    }
+  }
+
   const body = (
     <div className={classes.paper}>
       <FormControl>
         <TextField id="title" label="Title" value={title} onChange={(e) => setTitle(e.target.value)}></TextField>
         <TextField id="desc" label="Description" value={desc} onChange={(e) => setDesc(e.target.value)} ></TextField>
+        <p>{errorMessage ? "Please fill in all fields." : ""}</p>
+        <Button onClick={handleAddTodo}>Add</Button>
       </FormControl>
     </div>
   );
